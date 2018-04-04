@@ -45,19 +45,11 @@ void populateArray(){
     }
 }
 
-// void levelCheck(){
-//     //probe certain size of the array at a time depending on startLevel
-//     int last=0;
-//     int chunkSize = N / (pow(2, startLevel));
-//     for(int first = 0; last<=N; first+=chunkSize){
-//         last+=chunkSize;
-//         probeAlgorithm(first, last)
-//     }
-// }
+
 
 void probeAlgorithm(int first, int last){
     //only run while all successful stations have not been visited
-    if (success<k) {
+
         printf("FIRST: %d, LAST: %d\n",first, last);
         //1. if any of the probes in the range cause collisions, further subdivide recursively
         int localSuccess=0;
@@ -96,19 +88,27 @@ void probeAlgorithm(int first, int last){
             idles+=1;
             printf("Idle++, Idle = %d\n",idles);
         }
-    }
+
 
 }
-
+void levelCheck(){
+    //probe certain size of the array at a time depending on startLevel
+    int last=0;
+    int chunkSize = N / (pow(2, startLevel));
+    for(int first = 0; first<N; first+=chunkSize){
+        last+=chunkSize;
+        probeAlgorithm(first, last-1);
+    }
+}
 int main()
 {
     // populateArray(0, N);
-    stationsArray[1] = 1;
-    stationsArray[5] = 1;
-    stationsArray[6] = 1;
+    // stationsArray[1] = 1;
+    // stationsArray[5] = 1;
+    // stationsArray[6] = 1;
 
-
-    probeAlgorithm(0,N-1);
+    populateArray();
+    levelCheck();
 
     printf("\nSUCCESSES: %d\n", success);
     printf("IDLES: %d\n", idles);
